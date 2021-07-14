@@ -23,12 +23,10 @@ Resources:
       #Version: 3.16.1+a3fdb4ae4e87 # uncomment to use something other than latest
       Name: cloudbees-core
       ValueYaml: !Sub |
+        ingress-nginx:
+          Enabled: true
         OperationsCenter:
           Platform: eks
-          Ingress:
-            Class: alb
-            Annotations:
-              alb.ingress.kubernetes.io/scheme: internet-facing
           ExtraConfigMaps:
           - name: cloudbees-referrer
             labels:
@@ -64,7 +62,7 @@ Resources:
     Properties:
       ClusterName: !Ref EKSClusterName
       Namespace: default
-      Name: 'ingress/cjoc'
+      Name: 'service/cloudbees-core-ingress-nginx-controller'
       JsonPath: '{.status.loadBalancer.ingress[0].hostname}'
 
 Outputs:
